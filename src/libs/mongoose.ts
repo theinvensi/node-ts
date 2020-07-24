@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
 
-const connectionString = process.env.MONGO_URL
-
-mongoose.connect(connectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(
+  process.env.MONGO_URL,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+).then(() => console.log(`Mongo connected!`))
 
 export const db = mongoose.connection

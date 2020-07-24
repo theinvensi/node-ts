@@ -1,4 +1,4 @@
-import { post, getModelForClass, modelOptions, prop } from "@typegoose/typegoose"
+import { post, getModelForClass, modelOptions, prop, DocumentType } from "@typegoose/typegoose"
 import { errorHandlerGenerator, schemaOptionsGenerator } from '../../libs/typegoose'
 
 @modelOptions(schemaOptionsGenerator(`api_errors`))
@@ -24,6 +24,12 @@ export class ApiError {
 
   @prop()
   public sessionToken?: string
-}
 
-export const ApiErrorRepo = getModelForClass(ApiError)
+  static get model() {
+    return getModelForClass(this)
+  }
+
+  public get model(): DocumentType<ApiError> {
+    return new ApiError.model(this)
+  }
+}

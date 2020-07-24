@@ -1,10 +1,10 @@
 import { Socket, Server as SocketIOServer } from 'socket.io'
 
-import { ApiErrorRepo, ApiError } from '../models/ApiError'
+import { ApiError } from '../models/ApiError'
 
 let ws: SocketIOServer
 
-export const setWS = (_ws: SocketIOServer) => ws = _ws
+export const setWS = (_ws: SocketIOServer) => ws = !ws ? _ws : ws
 
 export const getWS = () => ws
 
@@ -26,7 +26,7 @@ export const runMiddlewares = async (client: CustomSocket, event: string | undef
 				if (typeof layer === `function`) await layer(client, args)
 			}
 		} catch (e) {
-			const apiError = new ApiErrorRepo({
+			const apiError = new ApiError.model({
 				headers: client.handshake.headers,
 				error: (e.stack ? e.stack : new Error(e).stack).replace(new RegExp(`Error: `, `gi`), ``),
 				ws: {
