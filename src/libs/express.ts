@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction, Express as ExpressInstance } from 'express'
 import * as classValidator from 'class-validator'
 
-import { ApiErrorRepo, ApiError } from '../models/ApiError'
+import { ApiError } from '../models/ApiError'
 
 let server: ExpressInstance
 
@@ -41,7 +41,7 @@ export const createHTTPHandler = (callback: (req: CustomRequest, res: CustomResp
 				})
 		}
 	} catch (e) {
-		const apiError = new ApiErrorRepo({
+		const apiError = new ApiError.model({
 			headers: req.headers,
 			error: (e.stack ? e.stack : new Error(e).stack).replace(new RegExp(`Error: `, `gi`), ``),
 			http: {

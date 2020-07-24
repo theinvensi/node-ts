@@ -6,6 +6,6 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true
   }
-).then(() => console.log(`Mongo connected!`))
+).then(() => console.log(`Mongo - [OK]`))
 
 export const db = mongoose.connection

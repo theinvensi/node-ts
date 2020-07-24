@@ -1,5 +1,7 @@
 import { post, getModelForClass, modelOptions, prop, DocumentType } from "@typegoose/typegoose"
+
 import { errorHandlerGenerator, schemaOptionsGenerator } from '../../libs/typegoose'
+import { db } from '../../libs/mongoose'
 
 @modelOptions(schemaOptionsGenerator(`api_errors`))
 @post(`save`, errorHandlerGenerator)
@@ -30,6 +32,8 @@ export class ApiError {
   }
 
   public get model(): DocumentType<ApiError> {
-    return new ApiError.model(this)
+    const model = new ApiError.model(this)
+    model.db = db
+    return model
   }
 }
